@@ -1,6 +1,7 @@
 plugins {
     java
     `java-library`
+    `maven-publish`
 }
 
 allprojects {
@@ -16,6 +17,7 @@ allprojects {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
+    apply(plugin = "maven-publish")
 
     java {
         toolchain {
@@ -30,5 +32,22 @@ subprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
+
+                versionMapping {
+                    usage("java-api") {
+                        fromResolutionOf("runtimeClasspath")
+                    }
+                    usage("java-runtime") {
+                        fromResolutionResult()
+                    }
+                }
+            }
+        }
     }
 }
