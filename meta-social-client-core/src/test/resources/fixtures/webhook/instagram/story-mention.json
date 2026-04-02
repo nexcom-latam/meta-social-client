@@ -1,0 +1,21 @@
+{
+  "object": "instagram",
+  "entry": [{
+    "id": "1234567890123456",
+    "time": 1712000023000,
+    "messaging": [{
+      "sender": { "id": "9876543210987654" },
+      "recipient": { "id": "1234567890123456" },
+      "timestamp": 1712000023000,
+      "message": {
+        "mid": "m_mention_IG01",
+        "attachments": [{
+          "type": "story_mention",
+          "payload": {
+            "url": "https://scontent.cdninstagram.com/story123.jpg"
+          }
+        }]
+      }
+    }]
+  }]
+}

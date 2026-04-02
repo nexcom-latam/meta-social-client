@@ -1,0 +1,16 @@
+{
+  "object": "instagram",
+  "entry": [{
+    "id": "1234567890123456",
+    "time": 1712000024000,
+    "messaging": [{
+      "sender": { "id": "9876543210987654" },
+      "recipient": { "id": "1234567890123456" },
+      "timestamp": 1712000024000,
+      "pass_thread_control": {
+        "new_owner_app_id": "app_new_222",
+        "metadata": "Passing to human agent"
+      }
+    }]
+  }]
+}

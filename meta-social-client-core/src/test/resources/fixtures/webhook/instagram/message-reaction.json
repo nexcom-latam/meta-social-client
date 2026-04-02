@@ -1,0 +1,17 @@
+{
+  "object": "instagram",
+  "entry": [{
+    "id": "1234567890123456",
+    "time": 1712000021000,
+    "messaging": [{
+      "sender": { "id": "9876543210987654" },
+      "recipient": { "id": "1234567890123456" },
+      "timestamp": 1712000021000,
+      "reaction": {
+        "mid": "m_reacted_IG01",
+        "action": "react",
+        "emoji": "\ud83d\udc4d"
+      }
+    }]
+  }]
+}

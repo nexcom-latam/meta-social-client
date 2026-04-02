@@ -1,0 +1,20 @@
+{
+  "object": "page",
+  "entry": [
+    {
+      "id": "5678901234567890",
+      "time": 1712000010000,
+      "messaging": [
+        {
+          "sender": { "id": "1111222233334444" },
+          "recipient": { "id": "5678901234567890" },
+          "timestamp": 1712000010000,
+          "message": {
+            "mid": "m_DL7ATKkJTcJIkBmUoAwQe",
+            "text": "Hello from Messenger!"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "object": "page",
+  "entry": [{
+    "id": "5678901234567890",
+    "time": 1712000030000,
+    "messaging": [{
+      "sender": { "id": "1111222233334444" },
+      "recipient": { "id": "5678901234567890" },
+      "timestamp": 1712000030000,
+      "postback": {
+        "mid": "m_postback_FB01",
+        "title": "Get Started",
+        "payload": "GET_STARTED_PAYLOAD",
+        "referral": {
+          "ref": "ad_campaign_1"
+        }
+      }
+    }]
+  }]
+}
