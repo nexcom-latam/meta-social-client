@@ -234,13 +234,18 @@ nexcom:
 
 ---
 
+## Build
+
+Gradle (Kotlin DSL), multi-module. Java 21 toolchain. Spring Boot 3.4.4 BOM
+via `io.spring.dependency-management` plugin.
+
 ## Dependencies
 
 | Scope | Artifact |
 |---|---|
-| compile | spring-boot-starter-webflux, spring-boot-starter-actuator, spring-boot-autoconfigure, jackson-databind |
-| optional | spring-boot-configuration-processor |
-| test | spring-boot-starter-test, reactor-test, okhttp3:mockwebserver |
+| api | spring-boot-starter-webflux, spring-boot-starter-actuator, spring-boot-autoconfigure, jackson-databind |
+| annotationProcessor | spring-boot-configuration-processor |
+| testImplementation | spring-boot-starter-test, reactor-test, okhttp3:mockwebserver |
 
 No Kafka. No Redis. No Vault. No Resilience4j.
 

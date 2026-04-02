@@ -36,7 +36,20 @@ Consumers layer those on top of this library's API.
 
 ## Installation
 
-### JitPack
+### Gradle (JitPack)
+
+```kotlin
+repositories {
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+
+dependencies {
+    implementation("com.github.nexcom-latam:meta-social-client:main-SNAPSHOT")
+}
+```
+
+### Maven (JitPack)
 
 ```xml
 <repositories>
@@ -53,14 +66,11 @@ Consumers layer those on top of this library's API.
 </dependency>
 ```
 
-### Maven Central (planned)
+## Building
 
-```xml
-<dependency>
-    <groupId>com.nexcom.channels</groupId>
-    <artifactId>meta-social-client-core</artifactId>
-    <version>0.1.0</version>
-</dependency>
+```bash
+./gradlew build          # compile + test
+./gradlew test           # tests only
 ```
 
 ## Configuration
