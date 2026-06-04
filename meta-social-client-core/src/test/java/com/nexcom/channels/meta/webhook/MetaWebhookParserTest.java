@@ -167,6 +167,37 @@ class MetaWebhookParserTest {
     }
 
     @Test
+    void parse_instagramStoryReply_returnsInboundMessageWithStoryReplyContext() {
+        List<MetaWebhookEvent> events = parse("instagram/story-reply.json");
+
+        assertThat(events).hasSize(1);
+        assertThat(events.getFirst()).isInstanceOf(InstagramInboundMessage.class);
+
+        InstagramInboundMessage msg = (InstagramInboundMessage) events.getFirst();
+        assertThat(msg.text()).isEqualTo("love this!");
+        assertThat(msg.replyContext()).isNotNull();
+        assertThat(msg.replyContext().mid()).isNull();
+        assertThat(msg.replyContext().storyId()).isEqualTo("17890000000000001");
+        assertThat(msg.replyContext().storyUrl())
+                .startsWith("https://lookaside.fbsbx.com/");
+        assertThat(msg.replyContext().isStoryReply()).isTrue();
+        assertThat(msg.replyToMid()).isNull();
+    }
+
+    @Test
+    void parse_instagramQuoteReply_returnsInboundMessageWithMidReplyContext() {
+        List<MetaWebhookEvent> events = parse("instagram/quote-reply.json");
+
+        assertThat(events).hasSize(1);
+        InstagramInboundMessage msg = (InstagramInboundMessage) events.getFirst();
+        assertThat(msg.replyContext()).isNotNull();
+        assertThat(msg.replyContext().mid()).isEqualTo("m_original_IG00");
+        assertThat(msg.replyContext().isStoryReply()).isFalse();
+        // legacy accessor still works
+        assertThat(msg.replyToMid()).isEqualTo("m_original_IG00");
+    }
+
+    @Test
     void parse_instagramHandover_returnsInstagramHandover() {
         List<MetaWebhookEvent> events = parse("instagram/handover.json");
 

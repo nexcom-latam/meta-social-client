@@ -129,16 +129,37 @@ public class MetaWebhookParser {
             return Optional.of(new InstagramMention(mid, senderId, recipientId, timestamp, null, mediaUrl, mediaUrl));
         }
 
-        String replyToMid = null;
-        if (messageNode.has("reply_to") && messageNode.get("reply_to").has("mid")) {
-            replyToMid = messageNode.get("reply_to").get("mid").asText();
-        }
+        ReplyContext replyContext = parseReplyContext(messageNode);
 
         if (isInstagram) {
-            return Optional.of(new InstagramInboundMessage(mid, senderId, recipientId, timestamp, text, attachments, replyToMid));
+            return Optional.of(new InstagramInboundMessage(mid, senderId, recipientId, timestamp, text, attachments, replyContext));
         } else {
-            return Optional.of(new FacebookInboundMessage(mid, senderId, recipientId, timestamp, text, attachments, replyToMid));
+            return Optional.of(new FacebookInboundMessage(mid, senderId, recipientId, timestamp, text, attachments, replyContext));
         }
+    }
+
+    /**
+     * Parse {@code message.reply_to} into a {@link ReplyContext}.
+     * Handles both DM quote-replies (just {@code mid}) and Instagram story replies
+     * (which carry {@code story.id} and a short-lived CDN-signed {@code story.url}).
+     */
+    private ReplyContext parseReplyContext(JsonNode messageNode) {
+        if (!messageNode.has("reply_to")) {
+            return null;
+        }
+        JsonNode replyTo = messageNode.get("reply_to");
+        String mid = textOrNull(replyTo, "mid");
+        String storyId = null;
+        String storyUrl = null;
+        if (replyTo.has("story")) {
+            JsonNode story = replyTo.get("story");
+            storyId = textOrNull(story, "id");
+            storyUrl = textOrNull(story, "url");
+        }
+        if (mid == null && storyId == null && storyUrl == null) {
+            return null;
+        }
+        return new ReplyContext(mid, storyId, storyUrl);
     }
 
     // ── reaction ──

@@ -25,7 +25,7 @@ class DefaultMetaWebhookDispatcherTest {
         };
 
         var dispatcher = new DefaultMetaWebhookDispatcher(List.of(handler));
-        var event = new InstagramInboundMessage("m_1", "s", "r", 0L, "hi", List.of(), null);
+        var event = new InstagramInboundMessage("m_1", "s", "r", 0L, "hi", List.of(), (com.nexcom.channels.meta.model.webhook.ReplyContext) null);
 
         StepVerifier.create(dispatcher.dispatch(event)).verifyComplete();
         assertThat(callCount.get()).isEqualTo(1);
@@ -41,7 +41,7 @@ class DefaultMetaWebhookDispatcherTest {
 
         var dispatcher = new DefaultMetaWebhookDispatcher(List.of(handler));
         // Send a Facebook event — handler only supports Instagram
-        var event = new FacebookInboundMessage("m_2", "s", "r", 0L, "hello", List.of(), null);
+        var event = new FacebookInboundMessage("m_2", "s", "r", 0L, "hello", List.of(), (com.nexcom.channels.meta.model.webhook.ReplyContext) null);
 
         StepVerifier.create(dispatcher.dispatch(event)).verifyComplete();
     }
@@ -49,7 +49,7 @@ class DefaultMetaWebhookDispatcherTest {
     @Test
     void dispatch_emptyHandlerList_completesWithoutError() {
         var dispatcher = new DefaultMetaWebhookDispatcher(List.of());
-        var event = new InstagramInboundMessage("m_3", "s", "r", 0L, "test", List.of(), null);
+        var event = new InstagramInboundMessage("m_3", "s", "r", 0L, "test", List.of(), (com.nexcom.channels.meta.model.webhook.ReplyContext) null);
 
         StepVerifier.create(dispatcher.dispatch(event)).verifyComplete();
     }
@@ -71,7 +71,7 @@ class DefaultMetaWebhookDispatcherTest {
         };
 
         var dispatcher = new DefaultMetaWebhookDispatcher(List.of(failingHandler, successHandler));
-        var event = new InstagramInboundMessage("m_4", "s", "r", 0L, "test", List.of(), null);
+        var event = new InstagramInboundMessage("m_4", "s", "r", 0L, "test", List.of(), (com.nexcom.channels.meta.model.webhook.ReplyContext) null);
 
         StepVerifier.create(dispatcher.dispatch(event)).verifyComplete();
         assertThat(successCount.get()).isEqualTo(1);
