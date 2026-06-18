@@ -78,6 +78,21 @@ class MetaWebhookParserTest {
         assertThat(msg.attachments().getFirst().type()).isEqualTo(AttachmentType.IG_POST);
     }
 
+    @Test
+    void parse_igReel_mapsToReelAndCapturesTitle() {
+        List<MetaWebhookEvent> events = parse("instagram/ig-reel.json");
+
+        assertThat(events).hasSize(1);
+        InstagramInboundMessage msg = (InstagramInboundMessage) events.getFirst();
+        assertThat(msg.attachments()).hasSize(1);
+        WebhookAttachment reel = msg.attachments().getFirst();
+        // Instagram delivers shared reels as "ig_reel" — must normalise to REEL
+        assertThat(reel.type()).isEqualTo(AttachmentType.REEL);
+        assertThat(reel.payload().title()).contains("edición mundialista");
+        assertThat(reel.payload().reelVideoId()).isEqualTo("18100613245889390");
+        assertThat(reel.payload().url()).isEqualTo("https://www.instagram.com/reel/DZvKlVlvcc8/");
+    }
+
     // ─── Facebook ───
 
     @Test

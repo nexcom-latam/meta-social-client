@@ -9,6 +9,8 @@ public record WebhookAttachment(
 ) {
     public record AttachmentPayload(
             String url,
-            @JsonProperty("sticker_id") String stickerId
+            @JsonProperty("sticker_id") String stickerId,
+            String title,
+            @JsonProperty("reel_video_id") String reelVideoId
     ) {}
 }

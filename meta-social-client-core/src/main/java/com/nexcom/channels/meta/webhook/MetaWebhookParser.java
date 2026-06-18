@@ -316,12 +316,17 @@ public class MetaWebhookParser {
             AttachmentType type = mapAttachmentType(textOrNull(att, "type"));
             String url = null;
             String stickerId = null;
+            String title = null;
+            String reelVideoId = null;
             if (att.has("payload")) {
                 JsonNode payloadNode = att.get("payload");
                 url = textOrNull(payloadNode, "url");
                 stickerId = textOrNull(payloadNode, "sticker_id");
+                title = textOrNull(payloadNode, "title");
+                reelVideoId = textOrNull(payloadNode, "reel_video_id");
             }
-            result.add(new WebhookAttachment(type, new WebhookAttachment.AttachmentPayload(url, stickerId)));
+            result.add(new WebhookAttachment(type,
+                    new WebhookAttachment.AttachmentPayload(url, stickerId, title, reelVideoId)));
         }
         return result;
     }
@@ -332,6 +337,11 @@ public class MetaWebhookParser {
         if ("share".equalsIgnoreCase(raw)) {
             log.warn("Received deprecated 'share' attachment type — mapping to IG_POST");
             return AttachmentType.IG_POST;
+        }
+
+        // Instagram DMs deliver shared reels as "ig_reel" (not the bare "reel" the enum value uses).
+        if ("ig_reel".equalsIgnoreCase(raw)) {
+            return AttachmentType.REEL;
         }
 
         return AttachmentType.fromValue(raw);
